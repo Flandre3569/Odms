@@ -1,30 +1,13 @@
+<script setup lang="ts"></script>
+
 <template>
-  <div class="app">
+  <div id="app">
     <router-view></router-view>
-    <router-link to="/home">home</router-link>&nbsp&nbsp
-    <router-link to="/login">login</router-link>
-    <br />
-    <HelloWorld />
-    <h1>A vue3 cli made by coisini</h1>
-    <h3>{{ index.count }}</h3>
-    <button @click="index.increment">+</button>
-    <button @click="index.decrement">-</button>
   </div>
 </template>
 
-<script setup lang="ts">
-import { indexStore } from "@/store/index";
-import HelloWorld from "@/components/HelloWorld.vue";
-const index = indexStore();
-</script>
-
-<style>
+<style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background: linear-gradient(to bottom right, #fef6e4, #f3d2c1) no-repeat;
 }
 </style>

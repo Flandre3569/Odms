@@ -1,44 +1,44 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import { firstUpperCase } from "@/utils/firstUpperCase";
-
-const pages = import.meta.globEager("../pages/**/index.vue");
-const routerFiles = [];
-for (const path in pages) {
-  const cpnPath = path.replace("../pages", "").replace("/index.vue", "");
-  const cpnDir = path.replace("../pages/", "").replace("/index.vue", "");
-  const firstUpper = firstUpperCase(cpnDir);
-  const component = {
-    path: cpnPath,
-    name: firstUpper,
-    component: () => import(/* @vite-ignore */ path),
-  };
-  routerFiles.push(component);
-}
-
-routerFiles.push({
-  path: "/:pathMatch(.*)*",
-  name: "notfound",
-  component: import("@/pages/notfound/index.vue"),
-});
-
-const routes: RouteRecordRaw[] = routerFiles;
+import { createRouter, createWebHistory } from "vue-router";
+import { localCache } from "@/utils/Cache";
 
 const router = createRouter({
-  routes,
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("@/views/login/LoginPage.vue"),
+    },
+    {
+      path: "/",
+      name: "home",
+      redirect: "/login",
+    },
+    {
+      path: "/main",
+      name: "main",
+      component: () => import("@/views/HomeView.vue"),
+      children: [
+        {
+          path: "/overview",
+          name: "overview",
+          component: () => import("@/views/overview/overview.vue"),
+        },
+        {
+          path: "/about",
+          name: "about",
+          component: () => import("@/views/AboutView.vue"),
+        },
+      ],
+    },
+  ],
 });
 
-// 守卫
-// router.beforeEach((to) => {
-//   if (to.path !== "/login") {
-//     if (token) {
-//       return "/login";
-//     }
-//   }
-
-//   if (to.path === "/main") {
-//     return firstMenu.url;
-//   }
-// });
+router.beforeEach((to) => {
+  const token = localCache.getCache("token");
+  if (to.path !== "/login" && !token && to.path !== "/homePage") {
+    return "login";
+  }
+});
 
 export default router;

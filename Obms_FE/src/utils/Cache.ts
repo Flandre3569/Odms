@@ -4,13 +4,13 @@ class MXCache {
     this.storage = isLoacl ? localStorage : sessionStorage;
   }
 
-  setCache(key: string, value: Object) {
+  setCache(key: string, value: unknown) {
     if (value) {
       this.storage.setItem(key, JSON.stringify(value));
     }
   }
   getCache(key: string) {
-    let value = this.storage.getItem(key);
+    const value = this.storage.getItem(key);
     if (value) {
       return JSON.parse(value);
     }

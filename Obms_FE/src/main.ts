@@ -1,15 +1,24 @@
 import { createApp } from "vue";
-import App from "./App.vue";
-
-// pinia
 import { createPinia } from "pinia";
-const pinia = createPinia();
 
-// router
+import App from "./App.vue";
 import router from "./router";
 
-// 挂载到vue根实例
+// base css
+import "@/assets/base.css";
+import "@/assets/tailwind.css";
+
+// animate
+import "animate.css";
+
+// ant-design-vue
+import Antd from "ant-design-vue";
+import "ant-design-vue/dist/antd.css";
+
 const app = createApp(App);
-app.use(pinia);
+
+app.use(createPinia());
 app.use(router);
+app.use(Antd);
+
 app.mount("#app");
