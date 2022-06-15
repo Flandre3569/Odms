@@ -1,5 +1,6 @@
 package com.mx.odms_be.controller;
 
+import com.mx.odms_be.aop.LogAnnotation;
 import com.mx.odms_be.entity.R;
 import com.mx.odms_be.entity.User;
 import com.mx.odms_be.service.UserService;
@@ -16,10 +17,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/findAllUser")
+    @LogAnnotation(module="查找",operator="查找所有用户")
     public List<User> findAllUser() {
         return userService.findAll();
     }
+
     @PostMapping("/findUserByUn")
+    @LogAnnotation(module="查找",operator="根据用户名查找用户")
     public R findUser(@RequestBody User user) {
         User result = userService.findUserByUsername(user.getUsername());
         if (result != null) {
@@ -27,7 +31,9 @@ public class UserController {
         }
         return R.failure(400, "查找失败，请检查输入的用户是否真实存在");
     }
+
     @GetMapping("/findUserById/{id}")
+    @LogAnnotation(module="查找",operator="根据id查找用户")
     public R findUser(@PathVariable("id") int id) {
         User result = userService.findUserById(id);
         if (result != null) {
@@ -37,6 +43,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
+    @LogAnnotation(module="注册",operator="添加用户")
     public R addUser(@RequestBody User user) {
         int result = userService.addUser(user);
         if (result > 0) {
@@ -46,6 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @LogAnnotation(module="登录",operator="用户登录验证")
     public R login(@RequestBody User user) {
         User result = userService.login(user.getUsername(), user.getPassword());
         if (result != null) {
@@ -56,6 +64,7 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUser")
+    @LogAnnotation(module="删除",operator="删除用户")
     public R deleteUser(@RequestBody User user) {
         int result = userService.deleteUser(user.getUsername());
         if (result > 0) {
@@ -65,6 +74,7 @@ public class UserController {
     }
 
     @PatchMapping("/updateUser")
+    @LogAnnotation(module="更新",operator="更新用户账户")
     public R updateUser(@RequestBody User user) {
         int result = userService.updateUser(user);
         if(result > 0) {
