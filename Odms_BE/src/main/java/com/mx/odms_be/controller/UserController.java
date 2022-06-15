@@ -78,7 +78,7 @@ public class UserController {
     public R updateUser(@RequestBody User user) {
         int result = userService.updateUser(user);
         if(result > 0) {
-            return R.success(200, "更新成功", result);
+            return R.success(200, "更新成功", user);
         }
         return R.failure(400, "更新失败，请检查你输入的信息是否正确");
     }
