@@ -1,5 +1,6 @@
 package com.mx.odms_be.utils;
 
+import com.mx.odms_be.entity.Manager;
 import com.mx.odms_be.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -16,6 +17,21 @@ public class CreateJwt {
         JwtBuilder jwtBuilder =  Jwts.builder()
                 .setId(user.getId()+"")
                 .setSubject(user.getUsername())    //用户名
+                .setIssuedAt(new Date())//登录时间
+                .signWith(SignatureAlgorithm.HS256, "my-fmx").setExpiration(new Date(new
+                        Date().getTime()+86400000));
+        //设置过期时间
+        //前三个为载荷playload 最后一个为头部 header
+//        System.out.println(jwtBuilder.compact());
+        return  jwtBuilder.compact();
+    }
+
+    public static String getoken(Manager manager) {
+        //Jwts.builder()生成
+        //Jwts.parser()验证
+        JwtBuilder jwtBuilder =  Jwts.builder()
+                .setId(manager.getId()+"")
+                .setSubject(manager.getUsername())    //用户名
                 .setIssuedAt(new Date())//登录时间
                 .signWith(SignatureAlgorithm.HS256, "my-fmx").setExpiration(new Date(new
                         Date().getTime()+86400000));
