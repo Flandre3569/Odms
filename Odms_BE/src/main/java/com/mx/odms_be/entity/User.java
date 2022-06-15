@@ -14,4 +14,5 @@ public class User {
     private Date createAt;
     @JsonFormat(timezone = "GMT+8", shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateAt;
+    private int userStatus;
 }

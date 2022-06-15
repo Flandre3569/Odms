@@ -25,9 +25,9 @@ public class CreateJwt {
         return  jwtBuilder.compact();
     }
 
-    public static void tokenToOut(String token) {
+    public static Claims tokenToOut(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey("my-123")
+                .setSigningKey("my-fmx")
                 .parseClaimsJws(token)
                 .getBody();
         System.out.println("用户id:"+claims.getId());
@@ -36,5 +36,6 @@ public class CreateJwt {
                 format(claims.getIssuedAt()));System.out.println("过期时间:"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").
                 format(claims.getExpiration()));
         System.out.println("用户角色:"+claims.get("role"));
+        return claims;
     }
 }

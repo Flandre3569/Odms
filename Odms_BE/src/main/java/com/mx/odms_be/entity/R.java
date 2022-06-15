@@ -9,9 +9,10 @@ public class R {
     private Object data;
     private String token;
 
-    public static R success(Integer code, Object data) {
+    public static R success(Integer code, String message, Object data) {
         R result = new R();
         result.setCode(code);
+        result.setMassage(message);
         result.setData(data);
         return result;
     }
@@ -23,11 +24,12 @@ public class R {
         return result;
     }
 
-    public static R userSuccess(Integer code, String message, Object data, String token) {
+
+    public static R userSuccess(Integer code,String message, Object data, String token) {
         R result = new R();
         result.setCode(code);
-        result.setMassage(message);
         result.setData(data);
+        result.setMassage(message);
         result.setToken(token);
         return result;
     }

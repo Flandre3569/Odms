@@ -19,22 +19,57 @@ public class UserController {
     public List<User> findAllUser() {
         return userService.findAll();
     }
-
-    @PostMapping("/addUser")
-    public R addUser(@RequestBody User user) {
-        int result = userService.userAdd(user);
-        if (result > 0) {
-            return R.success(200, "注册成功");
+    @PostMapping("/findUserByUn")
+    public R findUser(@RequestBody User user) {
+        User result = userService.findUserByUsername(user.getUsername());
+        if (result != null) {
+            return R.success(200, "查找成功", result);
         }
-        return R.failure(400, "添加失败");
+        return R.failure(400, "查找失败，请检查输入的用户是否真实存在");
     }
+    @GetMapping("/findUserById/{id}")
+    public R findUser(@PathVariable("id") int id) {
+        User result = userService.findUserById(id);
+        if (result != null) {
+            return R.success(200, "查找成功", result);
+        }
+        return R.failure(400, "查找失败，请检查输入的id是否真实存在");
+    }
+
+    @PostMapping("/register")
+    public R addUser(@RequestBody User user) {
+        int result = userService.addUser(user);
+        if (result > 0) {
+            return R.success(200, "注册成功", result);
+        }
+        return R.failure(400, "注册失败");
+    }
+
     @PostMapping("/login")
     public R login(@RequestBody User user) {
-        User result = userService.findUserByUsername(user.getUsername(), user.getPassword());
-        String token = CreateJwt.getoken(result);
+        User result = userService.login(user.getUsername(), user.getPassword());
         if (result != null) {
+            String token = CreateJwt.getoken(result);
             return R.userSuccess(200, "登录成功", result.getId(), token);
         }
         return R.failure(400, "登录失败，请检查用户名和密码是否正确");
+    }
+
+    @DeleteMapping("/deleteUser")
+    public R deleteUser(@RequestBody User user) {
+        int result = userService.deleteUser(user.getUsername());
+        if (result > 0) {
+            return R.success(200, "删除成功", result);
+        }
+        return R.failure(400, "删除失败，请检查您选中的用户是否已删除");
+    }
+
+    @PatchMapping("/updateUser")
+    public R updateUser(@RequestBody User user) {
+        int result = userService.updateUser(user);
+        if(result > 0) {
+            return R.success(200, "更新成功", result);
+        }
+        return R.failure(400, "更新失败，请检查你输入的信息是否正确");
     }
 }
