@@ -46,7 +46,7 @@
           <a-breadcrumb-item>Bill</a-breadcrumb-item>
         </a-breadcrumb>
         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-          Bill is a cat.
+          <router-view></router-view>
         </div>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
@@ -80,17 +80,10 @@ export default defineComponent({
   },
 });
 </script>
-<style>
-#components-layout-demo-side .logo {
+<style scoped>
+.logo {
   height: 32px;
   margin: 16px;
   background: rgba(255, 255, 255, 0.3);
-}
-
-.site-layout .site-layout-background {
-  background: #fff;
-}
-[data-theme="dark"] .site-layout .site-layout-background {
-  background: #141414;
 }
 </style>

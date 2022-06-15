@@ -1,4 +1,4 @@
-package com.mx.obms_be;
+package com.mx.odms_be;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
