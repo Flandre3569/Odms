@@ -11,4 +11,6 @@ public interface FileService {
     List<File> findFile(int user_id);
 
     String upload(MultipartFile file, int user_id);
+
+    List<File> fileAllFile();
 }

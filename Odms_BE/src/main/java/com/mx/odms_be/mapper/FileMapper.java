@@ -14,4 +14,7 @@ public interface FileMapper {
 
     @Select({"select * from `file` where user_id = #{user_id}"})
     List<File> findFileByUID(int user_id);
+
+    @Select({"select * from `file`"})
+    List<File> findAllFile();
 }

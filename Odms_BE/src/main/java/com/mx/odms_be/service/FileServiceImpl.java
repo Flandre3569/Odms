@@ -68,4 +68,9 @@ public class FileServiceImpl implements FileService {
         }
         return "上传失败";
     }
+
+    @Override
+    public List<File> fileAllFile() {
+        return fileMapper.findAllFile();
+    }
 }
