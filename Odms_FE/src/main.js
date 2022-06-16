@@ -1,15 +1,21 @@
 import { createApp } from 'vue'
+import App from './App.vue'
+// router
+import router from './router'
+//pinia
 import { createPinia } from 'pinia'
 
-import App from './App.vue'
-import router from './router'
+// navie UI
+import naive from 'naive-ui'
 
 // global style
 import './assets/css/index.less';
 
+//tailwind
+import '@/assets/index.css'
+
 const app = createApp(App)
-
-app.use(createPinia())
 app.use(router)
-
+app.use(createPinia())
+app.use(naive)
 app.mount('#app')

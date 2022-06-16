@@ -1,13 +1,11 @@
 <template>
-  <n-config-provider :theme="darkTheme">
-    <div class="app">
-      <router-view v-slot="{ Component }">
-        <transition name="cartoon" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-    </div>
-  </n-config-provider>
+  <div class="app">
+    <router-view v-slot="{ Component }">
+      <transition name="cartoon" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </div>
 </template>
 
 <script>
