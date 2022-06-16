@@ -2,6 +2,7 @@ package com.mx.odms_be.service;
 
 import com.mx.odms_be.entity.User;
 import com.mx.odms_be.mapper.UserMapper;
+import com.mx.odms_be.utils.MD5Util;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,15 +19,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(User user) {
-
-        int result = userMapper.addUser(user);
-        return result;
+        String newPwd = MD5Util.getMD5(user.getPassword());
+        user.setPassword(newPwd);
+        return userMapper.addUser(user);
     }
 
     @Override
     public User login(String username, String password) {
         User user = userMapper.findUserByUsername(username);
-        if (user.getPassword().equals(password)) {
+        String newPwd = MD5Util.getMD5(password);
+        if (user.getPassword().equals(newPwd)) {
             return user;
         }
         return null;
@@ -39,6 +41,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUser(User user) {
+        String newPwd = MD5Util.getMD5(user.getPassword());
+        user.setPassword(newPwd);
         return userMapper.updateUser(user);
     }
 

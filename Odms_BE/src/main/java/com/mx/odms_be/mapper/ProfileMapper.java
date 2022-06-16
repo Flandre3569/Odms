@@ -9,9 +9,12 @@ import org.apache.ibatis.annotations.Update;
 public interface ProfileMapper {
     @Select("select * from `profile` where user_id = #{user_id}")
     Profile findProfile(int user_id);
+
     @Update({"<script>",
             "update profile",
             "<set>",
+            "<if test = 'id != null'> id = #{id},</if>",
+            "<if test = 'user_id != null'> user_id = #{user_id},</if>",
             "<if test = 'name != null'> name = #{name},</if>",
             "<if test = 'avatar != null'> avatar = #{avatar},</if>",
             "<if test = 'email != null'> email = #{email},</if>",

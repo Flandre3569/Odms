@@ -14,10 +14,10 @@ public class ProfileController {
     @Resource
     private ProfileService profileService;
 
-    @GetMapping("/findProfile/{user_id}")
+    @PostMapping("/findProfile")
     @LogAnnotation(module = "查找", operator = "用户信息查找")
-    public R findProfile(@PathVariable("user_id") int user_id) {
-        Profile result = profileService.findProfile(user_id);
+    public R findProfile(@RequestBody Profile profile) {
+        Profile result = profileService.findProfile(profile.getUser_id());
         if (result != null) {
             return R.success(200, "查找成功", result);
         }
