@@ -11,15 +11,15 @@
 
 // 方式二：根据process.env.NODE_ENV
 // process.env.NODE_ENV在不同的环境下会显示不同的值
-console.log(process.env.NODE_ENV);
+// console.log(import.meta.env.NODE_ENV);
 
 let BASE_URL = '';
 const TIME_OUT = 10000;
 
 // 这里api进行了反向代理，解决跨域问题。
-if (process.env.NODE_ENV === 'development') {
+if (import.meta.env.NODE_ENV === 'development') {
   BASE_URL = '/api';
-} else if (process.env.NODE_ENV === 'production') {
+} else if (import.meta.env.NODE_ENV === 'production') {
   BASE_URL = '/api';
 } else {
   BASE_URL = '/api';

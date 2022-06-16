@@ -1,6 +1,6 @@
 import MXRequest from './request';
 import { BASE_URL, TIME_OUT } from './request/config';
-import localCache from '@/utils/localCache';
+import localCache from "@/utils/localCache";
 
 const mxRequest = new MXRequest({
   // 因为在request/index.ts中对MXRequest封装了AxiosInstance实例属性和interceptors拦截器属性，所以在新建的时候都需要对这两个属性进行传值

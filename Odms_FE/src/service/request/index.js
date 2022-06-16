@@ -1,6 +1,6 @@
 import axios from 'axios';
 // 导入加载实例和实例返回值类型，在最新的element-plus中，类型也可以直接从element-plus包里获取了
-import { ElLoading } from 'element-plus';
+import { useLoadingBar } from 'naive-ui'
 
 const DEFAULT_LOADING = true;
 
@@ -35,11 +35,7 @@ class MXRequest {
       (config) => {
         // 设置请求数据时加载动画
         if (this.showLoading) {
-          this.loading = ElLoading.service({
-            lock: true,
-            text: '正在拉取数据....',
-            background: 'rgba(0,0,0,0.5)'
-          });
+          this.loading = useLoadingBar().start()
         }
         return config;
       },
@@ -53,7 +49,7 @@ class MXRequest {
         // 当服务器对面响应的时候代表请求已经完成，关闭loading动画
         this.loading?.close();
         const data = res.data;
-        if (data.status === '-1001') {
+        if (data.status !== '200') {
           console.log(`信息错误，请求失败`);
         } else {
           return res;

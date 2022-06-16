@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
-import axios from "axios";
 import router from "@/router";
-import { localCache } from "@/utils/Cache";
+import localCache from "@/utils/localCache";
+import { loginRequest, registerRequest } from "@/service/login/index"
+import axios from "axios";
 
 export const useUserStore = defineStore({
   id: "user",
@@ -12,19 +13,23 @@ export const useUserStore = defineStore({
   getters: {},
   actions: {
     async loginAction(payload) {
+      const { username, password } = payload
+      // const loginInfo = await loginRequest(username, password)
       const loginInfo = await axios.post("api/user/login", {
-        username: payload.username,
-        password: payload.password,
-      });
+        username,
+        password
+      })
       const result = loginInfo.data;
 
       localCache.setCache("token", result.token);
-      localCache.setCache("user_id", result.id);
+      localCache.setCache("user_id", result.data);
 
-      this.$state.id = result.id;
+      this.$state.id = result.data;
       this.$state.token = result.token;
-      if (result.token) {
-        router.push("/homePage");
+
+      const flag = localCache.getCache("token");
+      if (flag) {
+        router.push("/main");
       }
     },
 
@@ -34,10 +39,8 @@ export const useUserStore = defineStore({
     },
 
     async signUpAction(payload) {
-      const registerInfo = await axios.post("api/user/register", {
-        username: payload.username,
-        password: payload.password,
-      });
+      const { username, password } = payload;
+      const registerInfo = await registerRequest(username, password);
       console.log(registerInfo);
     },
   },
