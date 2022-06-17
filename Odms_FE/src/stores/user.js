@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import router from "@/router";
 import localCache from "@/utils/localCache";
-import { loginRequest, registerRequest } from "@/service/login/index"
+import { registerRequest } from "@/service/login/index"
 import axios from "axios";
 
 export const useUserStore = defineStore({
@@ -36,6 +36,9 @@ export const useUserStore = defineStore({
     signOutAction() {
       this.$state.id = "";
       this.$state.token = "";
+      localCache.deleteCache("token");
+      localCache.deleteCache("user_id");
+      router.push("/login");
     },
 
     async signUpAction(payload) {

@@ -48,8 +48,9 @@ class MXRequest {
       (res) => {
         // 当服务器对面响应的时候代表请求已经完成，关闭loading动画
         this.loading?.close();
-        const data = res.data;
-        if (data.status !== '200') {
+        const data = res;
+        console.log(data);
+        if (data.status !== 200) {
           console.log(`信息错误，请求失败`);
         } else {
           return res;

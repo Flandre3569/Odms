@@ -1,10 +1,12 @@
 <template>
   <div class="app">
-    <router-view v-slot="{ Component }">
-      <transition name="cartoon" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <n-loading-bar-provider>
+      <router-view v-slot="{ Component }">
+        <transition name="cartoon" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </n-loading-bar-provider>
   </div>
 </template>
 
