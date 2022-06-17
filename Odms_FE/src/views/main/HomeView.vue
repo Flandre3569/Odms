@@ -57,7 +57,9 @@
             >
           </n-button>
         </n-layout-sider>
-        <n-layout content-style="padding: 24px;"> 从这里放内容 </n-layout>
+        <n-layout content-style="padding: 24px;">
+          <router-view></router-view>
+        </n-layout>
       </n-layout>
       <n-layout-footer
         bordered
@@ -73,7 +75,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import NavMenuVue from "./NavMenu.vue";
-import { LogOutOutline, CloudDoneOutline } from "@vicons/ionicons5";
+import { LogOutOutline } from "@vicons/ionicons5";
 import { useUserStore } from "@/stores/user";
 import { useProfileStore } from "@/stores/profile";
 import localCache from "@/utils/localCache";

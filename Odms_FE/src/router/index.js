@@ -17,9 +17,44 @@ const router = createRouter({
     {
       path: "/main",
       name: "main",
+      redirect: "/overview",
       component: () => import("@/views/main/HomeView.vue"),
       children: [
-
+        {
+          path: "/overview",
+          name: "overview",
+          component: () => import("@/views/overview/OverviewPage.vue")
+        },
+        {
+          path: "/account",
+          name: "account",
+          component: () => import("@/views/profile/AccountPage.vue")
+        },
+        {
+          path: "/profile",
+          name: "profile",
+          component: () => import("@/views/profile/ProfilePage.vue")
+        },
+        {
+          path: "/file-display",
+          name: "file-display",
+          component: () => import("@/views/file/FileDisplayPage.vue")
+        },
+        {
+          path: "/file-operate",
+          name: "file-operate",
+          component: () => import("@/views/file/FileOperatePage.vue")
+        },
+        {
+          path: "/file-share",
+          name: "file-share",
+          component: () => import("@/views/file/FileSharePage.vue")
+        },
+        {
+          path: "/friendship",
+          name: "friendship",
+          component: () => import("@/views/friendship/FriendPage.vue")
+        }
       ]
     },
     {

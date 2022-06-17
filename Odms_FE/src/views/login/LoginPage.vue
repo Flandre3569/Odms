@@ -73,7 +73,7 @@
 <script setup>
 import rules from "./rules/accountRules";
 import { reactive } from "vue";
-import { useUserStore } from "@/stores/login";
+import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
 
 // 登录

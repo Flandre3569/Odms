@@ -1,4 +1,5 @@
 <script setup>
+import { RouterLink } from "vue-router";
 import { h } from "vue";
 import { NIcon } from "naive-ui";
 import {
@@ -17,7 +18,17 @@ import {
 
 const menuOptions = [
   {
-    label: "信息总览",
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            name: "overview",
+            path: "/overview",
+          },
+        },
+        { default: () => "信息总览" }
+      ),
     key: "overview",
   },
   {
@@ -25,11 +36,31 @@ const menuOptions = [
     key: "profile",
     children: [
       {
-        label: "账号密码管理",
+        label: () =>
+          h(
+            RouterLink,
+            {
+              to: {
+                name: "account",
+                path: "/account",
+              },
+            },
+            { default: () => "账号密码管理" }
+          ),
         key: "idCard",
       },
       {
-        label: "个人信息管理",
+        label: () =>
+          h(
+            RouterLink,
+            {
+              to: {
+                name: "profile",
+                path: "/profile",
+              },
+            },
+            { default: () => "个人信息管理" }
+          ),
         key: "profileCard",
       },
     ],
@@ -39,33 +70,73 @@ const menuOptions = [
     key: "fileManage",
     children: [
       {
-        label: "文件总览",
+        label: () =>
+          h(
+            RouterLink,
+            {
+              to: {
+                name: "file-display",
+                path: "/file-display",
+              },
+            },
+            { default: () => "文件总览" }
+          ),
         key: "filesDisplay",
       },
       {
-        label: "文件操作",
+        label: () =>
+          h(
+            RouterLink,
+            {
+              to: {
+                name: "file-operate",
+                path: "/file-operate",
+              },
+            },
+            { default: () => "文件操作" }
+          ),
         key: "filesOperate",
       },
       {
-        label: "文件共享",
+        label: () =>
+          h(
+            RouterLink,
+            {
+              to: {
+                name: "file-share",
+                path: "/file-share",
+              },
+            },
+            { default: () => "文件共享" }
+          ),
         key: "fileDelivery",
       },
     ],
   },
   {
-    label: "友链",
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            name: "friendship",
+            path: "/friendship",
+          },
+        },
+        { default: () => "友链" }
+      ),
     key: "friendship",
   },
 ];
 
 const props = defineProps(["collapsed"]);
 
-const renderMenuLabel = (option) => {
-  if ("href" in option) {
-    return h("a", { href: option.href, target: "_blank" }, option.label);
-  }
-  return option.label;
-};
+// const renderMenuLabel = (option) => {
+//   if ("href" in option) {
+//     return h("a", { href: option.href, target: "_blank" }, option.label);
+//   }
+//   return option.label;
+// };
 
 const renderMenuIcon = (option) => {
   if (option.key === "overview") return h(ColorPaletteOutline);
@@ -91,7 +162,6 @@ const expandIcon = () => {
     :collapsed-width="100"
     :collapsed-icon-size="30"
     :options="menuOptions"
-    :render-label="renderMenuLabel"
     :render-icon="renderMenuIcon"
     :expand-icon="expandIcon"
   />
