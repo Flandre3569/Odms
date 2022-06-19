@@ -11,11 +11,13 @@ import {
   ColorPaletteOutline,
   InformationCircleOutline,
   PersonOutline,
-  FileTrayFullOutline,
   FolderOpenOutline,
   CodeSlashOutline,
   ShareOutline,
   ChatboxOutline,
+  BarChartOutline,
+  DocumentsOutline,
+  Planet,
 } from "@vicons/ionicons5";
 
 const menuOptions = [
@@ -190,11 +192,14 @@ const renderMenuIcon = (option) => {
   if (option.key === "profile") return h(IdCardOutline);
   if (option.key === "idCard") return h(InformationCircleOutline);
   if (option.key === "profileCard") return h(PersonOutline);
-  if (option.key === "fileManage") return h(FileTrayFullOutline);
+  // if (option.key === "fileManage") return h(FileTrayFullOutline);
   if (option.key === "filesDisplay") return h(FolderOpenOutline);
   if (option.key === "filesOperate") return h(CodeSlashOutline);
   if (option.key === "fileDelivery") return h(ShareOutline);
   if (option.key === "friendship") return h(ChatboxOutline);
+  if (option.key === "dashboard") return h(BarChartOutline);
+  if (option.key === "fileManage") return h(DocumentsOutline);
+  if (option.key === "client") return h(Planet);
   return h(NIcon, null, { default: () => h(BookmarkOutline) });
 };
 

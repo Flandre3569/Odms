@@ -31,7 +31,7 @@
         </n-form-item>
       </n-form>
     </n-modal>
-    <n-card content-style="padding: 0;" class="login-card">
+    <n-card content-style="padding: 0;" class="login-card w-1/3">
       <n-tabs
         type="line"
         size="large"
@@ -158,7 +158,7 @@ const cancelCallback = () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
+  width: 30%;
   height: 50%;
 }
 

@@ -64,9 +64,9 @@
       <n-layout-footer
         bordered
         position="absolute"
-        style="height: 64px; padding: 24px"
+        style="height: 64px; padding: 24px; text-align: center"
       >
-        底部
+        Copyright © 2022 coisini.
       </n-layout-footer>
     </n-layout>
   </div>

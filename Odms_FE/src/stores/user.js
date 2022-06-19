@@ -47,8 +47,14 @@ export const useUserStore = defineStore({
 
     async signUpAction(payload) {
       const { username, password } = payload;
-      const registerInfo = await registerRequest(username, password);
-      console.log(registerInfo);
+      const registerInfo = await axios.post("api/user/register", {
+        username,
+        password
+      })
+      if (registerInfo.data.code === 200) {
+        alert("注册成功")
+        router.go(0)
+      }
     },
 
     async judgePwd(payload) {
@@ -71,6 +77,15 @@ export const useUserStore = defineStore({
       const result = changeInfo.data;
       console.log(result);
       result.code === 200 ? localCache.setCache("result", "success") : localCache.setCache("result", "failure");
+    },
+
+    async addUser(payload) {
+      const { username, password } = payload;
+      const addInfo = await axios.post("api/user/register", {
+        username,
+        password
+      })
+      console.log(addInfo);
     }
   },
 });

@@ -1,4 +1,32 @@
 <template>
+  <n-modal
+    v-model:show="showModalUser"
+    preset="dialog"
+    title="add User"
+    content="plz input your username and password"
+    positive-text="确认"
+    negative-text="取消"
+    @positive-click="submitCallback"
+    @negative-click="cancelCallback"
+  >
+    <n-form
+      :label-width="80"
+      :model="addUserInfo"
+      :rules="rules"
+      label-placement="top"
+    >
+      <n-form-item label="username" path="username">
+        <n-input v-model:value="addUserInfo.username" />
+      </n-form-item>
+      <n-form-item path="password" label="password">
+        <n-input
+          v-model:value="addUserInfo.password"
+          type="password"
+          @keydown.enter.prevent
+        />
+      </n-form-item>
+    </n-form>
+  </n-modal>
   <n-modal v-model:show="showModal">
     <n-card
       style="width: 600px"
@@ -37,23 +65,26 @@
       :pagination="pagination"
     />
   </n-space>
+  <n-button
+    strong
+    secondary
+    type="primary"
+    @click="showModalUser = true"
+    class="w-32"
+  >
+    添加用户
+  </n-button>
 </template>
 
 <script setup>
 import { onMounted, reactive, h, ref } from "vue";
 import router from "@/router";
 import axios from "axios";
-import localCache from "@/utils/localCache.js";
 import { NButton } from "naive-ui";
+import { useUserStore } from "@/stores/user";
+import rules from "@/views/login/rules/accountRules";
 
 let showModal = ref(false);
-const deleteFile = (row) => {
-  axios.patch(`/api/user/deleteUserById/${row.id}`).then((res) => {
-    if (res.data.code === 200) {
-      router.go(0);
-    }
-  });
-};
 
 const profileData = reactive({});
 const getDetail = async (row) => {
@@ -63,6 +94,16 @@ const getDetail = async (row) => {
   const data = getData.data.data;
   Object.assign(profileData, data);
   showModal.value = true;
+};
+
+const deleteFile = (row) => {
+  console.log(row.id);
+  axios.patch(`/api/user/deleteUserById/${row.id}`).then((res) => {
+    console.log(res);
+    if (res.data.code === 200) {
+      router.go(0);
+    }
+  });
 };
 
 // 渲染数据
@@ -78,6 +119,7 @@ onMounted(async () => {
       username: element.username,
       createAt: element.createAt,
       updateAt: element.updateAt,
+      status: element.userStatus,
     };
     renderData.push(obj);
   });
@@ -100,6 +142,10 @@ const columns = [
   {
     title: "更新时间",
     key: "updateAt",
+  },
+  {
+    title: "账户状态",
+    key: "status",
   },
   {
     title: "删除",
@@ -133,4 +179,18 @@ const columns = [
 
 // 分页
 const pagination = { pageSize: 10 };
+
+// 添加用户
+const submitCallback = () => {
+  userStore.addUser(addUserInfo);
+};
+const cancelCallback = () => {
+  console.log("取消");
+};
+const addUserInfo = reactive({
+  username: "",
+  password: "",
+});
+const userStore = useUserStore();
+const showModalUser = ref(false);
 </script>
