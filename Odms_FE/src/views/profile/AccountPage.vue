@@ -49,7 +49,7 @@
           <n-button
             v-if="current === 2"
             :size="btnSize"
-            @click="changePwdHandle"
+            @click="handleButtonClick"
           >
             {{ btnContent }}
           </n-button>
@@ -61,7 +61,7 @@
           <n-button
             v-if="current === 3"
             :size="btnSize"
-            @click="handleButtonClick"
+            @click="changePwdHandle"
           >
             {{ btnContent }}
           </n-button>
@@ -124,7 +124,7 @@ const changePwd = reactive({
 });
 
 const changePwdHandle = async () => {
-  await userStore.changePwd(user);
+  await userStore.changePwd(changePwd);
   if (localCache.getCache("result") === "success") {
     localCache.deleteCache("result");
     current.value = (current.value % 4) + 1;

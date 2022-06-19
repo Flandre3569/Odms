@@ -1,5 +1,7 @@
 <script setup>
 import { RouterLink } from "vue-router";
+
+import localCache from "@/utils/localCache";
 import { h } from "vue";
 import { NIcon } from "naive-ui";
 import {
@@ -129,6 +131,51 @@ const menuOptions = [
   },
 ];
 
+const menuOptionsManager = [
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            name: "dashboard",
+            path: "/dashboard",
+          },
+        },
+        { default: () => "仪表盘" }
+      ),
+    key: "dashboard",
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            name: "client",
+            path: "/client",
+          },
+        },
+        { default: () => "用户总览" }
+      ),
+    key: "client",
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            name: "file-manage",
+            path: "/file-manage",
+          },
+        },
+        { default: () => "文件管理" }
+      ),
+    key: "fileManage",
+  },
+];
+
 const props = defineProps(["collapsed"]);
 
 // const renderMenuLabel = (option) => {
@@ -154,14 +201,27 @@ const renderMenuIcon = (option) => {
 const expandIcon = () => {
   return h(NIcon, null, { default: () => h(CaretDownOutline) });
 };
+
+const role = localCache.getCache("role");
+console.log(role);
 </script>
 
 <template>
   <n-menu
+    v-if="role === 'user'"
     :collapsed="props.collapsed"
     :collapsed-width="100"
     :collapsed-icon-size="30"
     :options="menuOptions"
+    :render-icon="renderMenuIcon"
+    :expand-icon="expandIcon"
+  />
+  <n-menu
+    v-if="role === 'manager'"
+    :collapsed="props.collapsed"
+    :collapsed-width="100"
+    :collapsed-icon-size="30"
+    :options="menuOptionsManager"
     :render-icon="renderMenuIcon"
     :expand-icon="expandIcon"
   />

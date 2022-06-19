@@ -1,5 +1,36 @@
 <template>
   <div class="login">
+    <n-button @click="showModal = true" class="absolute right-10 top-10">
+      manager login
+    </n-button>
+    <n-modal
+      v-model:show="showModal"
+      preset="dialog"
+      title="welcome Manager"
+      content="plz input your username and password"
+      positive-text="确认"
+      negative-text="取消"
+      @positive-click="submitCallback"
+      @negative-click="cancelCallback"
+    >
+      <n-form
+        :label-width="80"
+        :model="manager"
+        :rules="rules"
+        label-placement="top"
+      >
+        <n-form-item label="username" path="username">
+          <n-input v-model:value="manager.username" />
+        </n-form-item>
+        <n-form-item path="password" label="password">
+          <n-input
+            v-model:value="manager.password"
+            type="password"
+            @keydown.enter.prevent
+          />
+        </n-form-item>
+      </n-form>
+    </n-modal>
     <n-card content-style="padding: 0;" class="login-card">
       <n-tabs
         type="line"
@@ -72,9 +103,11 @@
 
 <script setup>
 import rules from "./rules/accountRules";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useUserStore } from "@/stores/user";
+import { useManagerStore } from "@/stores/manager";
 const userStore = useUserStore();
+const managerStore = useManagerStore();
 
 // 登录
 const userLogin = reactive({
@@ -92,6 +125,20 @@ const userRegister = reactive({
 });
 const registerHandle = () => {
   userStore.signUpAction(userRegister);
+};
+
+// 管理员登录
+const showModal = ref(false);
+const manager = reactive({
+  username: "",
+  password: "",
+});
+
+const submitCallback = () => {
+  managerStore.login(manager);
+};
+const cancelCallback = () => {
+  console.log("取消");
 };
 </script>
 

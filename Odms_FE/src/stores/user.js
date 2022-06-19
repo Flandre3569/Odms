@@ -9,6 +9,7 @@ export const useUserStore = defineStore({
   state: () => ({
     id: "",
     token: "",
+    role: ""
   }),
   getters: {},
   actions: {
@@ -24,9 +25,11 @@ export const useUserStore = defineStore({
 
       localCache.setCache("token", result.token);
       localCache.setCache("user_id", result.data);
+      localCache.setCache("role", "user");
 
       this.$state.id = result.data;
       this.$state.token = result.token;
+      this.$state.role = "user"
 
       const flag = localCache.getCache("token");
       if (flag) {
@@ -37,8 +40,8 @@ export const useUserStore = defineStore({
     signOutAction() {
       this.$state.id = "";
       this.$state.token = "";
-      localCache.deleteCache("token");
-      localCache.deleteCache("user_id");
+      this.$state.role = "";
+      localStorage.clear();
       router.push("/login");
     },
 

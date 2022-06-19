@@ -17,8 +17,14 @@ const router = createRouter({
     {
       path: "/main",
       name: "main",
-      redirect: "/overview",
       component: () => import("@/views/main/HomeView.vue"),
+      redirect: () => {
+        if (localCache.getCache("role") === "manager") {
+          return "/dashboard"
+        } else {
+          return "/overview"
+        }
+      },
       children: [
         {
           path: "/overview",
@@ -54,9 +60,25 @@ const router = createRouter({
           path: "/friendship",
           name: "friendship",
           component: () => import("@/views/friendship/FriendPage.vue")
+        },
+        {
+          path: "/dashboard",
+          name: "dashboard",
+          component: () => import("@/views/dashboard/DashboardPage.vue")
+        },
+        {
+          path: "/client",
+          name: "client",
+          component: () => import("@/views/manage/UsersPage.vue")
+        },
+        {
+          path: "/file-manage",
+          name: "file-manage",
+          component: () => import("@/views/manage/FilesPage.vue")
         }
       ]
     },
+
     {
       path: '/about',
       name: 'about',

@@ -89,6 +89,7 @@ const userStore = useUserStore();
 const profileStore = useProfileStore();
 
 const projectName = ref("Online Document MS");
+
 const userName = ref(localCache.getCache("name"));
 const avatar = ref(localCache.getCache("avatar"));
 
