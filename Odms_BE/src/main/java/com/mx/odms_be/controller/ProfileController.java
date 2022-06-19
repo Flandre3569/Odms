@@ -7,6 +7,7 @@ import com.mx.odms_be.service.ProfileService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/profile")
@@ -32,5 +33,11 @@ public class ProfileController {
             return R.success(200, "更新成功", profile);
         }
         return R.failure(400, "更新失败，请检查输入内容");
+    }
+
+    @GetMapping("/findAllProfile")
+    public R findAllProfile() {
+        List<Profile> profileList = profileService.findAllProfile();
+        return R.success(200, "查询成功", profileList);
     }
 }

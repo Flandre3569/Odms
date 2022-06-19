@@ -73,4 +73,20 @@ public class FileServiceImpl implements FileService {
     public List<File> fileAllFile() {
         return fileMapper.findAllFile();
     }
+
+    @Override
+    public int deleteFile(int id) {
+        return fileMapper.deleteFile(id);
+    }
+
+    @Override
+    public File findFileById(int id) {
+        System.out.println(fileMapper.findFileById(id));
+        return fileMapper.findFileById(id);
+    }
+
+    @Override
+    public int fileCount(int user_id) {
+        return fileMapper.fileCount(user_id);
+    }
 }

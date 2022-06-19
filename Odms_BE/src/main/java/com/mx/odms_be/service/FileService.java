@@ -13,4 +13,10 @@ public interface FileService {
     String upload(MultipartFile file, int user_id);
 
     List<File> fileAllFile();
+
+    int deleteFile(int id);
+
+    File findFileById(int id);
+
+    int fileCount(int user_id);
 }

@@ -15,9 +15,8 @@ import java.util.List;
 public class FileController {
     @Resource
     private FileService fileService;
-    @PostMapping("/uploadOssFile")
-    @LogAnnotation(module = "上传", operator = "上传文件")
-    public R uploadOssFile(MultipartFile file, int user_id){
+    @PostMapping("/uploadOssFile/{user_id}")
+    public R uploadOssFile(MultipartFile file, @PathVariable int user_id){
         //获取上传文件MultipartFile
         //返回上传到oss的路径
         String url = fileService.upload(file, user_id);
@@ -47,4 +46,27 @@ public class FileController {
         return R.failure(400, "查找失败，没有文件");
     }
 
+    @DeleteMapping("/deleteFile/{id}")
+    public R deleteFile(@PathVariable int id) {
+        int result = fileService.deleteFile(id);
+        if(result > 0) {
+            return R.success(200, "删除成功", result);
+        }
+        return R.failure(400, "删除失败");
+    }
+
+    @GetMapping("/findFileById/{id}")
+    public R findFileById(@PathVariable int id) {
+        File result = fileService.findFileById(id);
+        if(result != null) {
+            return R.success(200, "查找成功", result);
+        }
+        return R.failure(400, "查找失败");
+    }
+
+    @GetMapping("/fileCount/{user_id}")
+    public R countFile(@PathVariable int user_id) {
+        int result = fileService.fileCount(user_id);
+        return R.success(200, "查询成功", result);
+    }
 }

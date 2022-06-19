@@ -56,14 +56,14 @@ public class UserController {
     @LogAnnotation(module="登录",operator="用户登录验证")
     public R login(@RequestBody User user) {
         User result = userService.login(user.getUsername(), user.getPassword());
-        if (result != null) {
+        if (result != null && result.getUserStatus() == 0) {
             String token = CreateJwt.getoken(result);
             return R.userSuccess(200, "登录成功", result.getId(), token);
         }
         return R.failure(400, "登录失败，请检查用户名和密码是否正确");
     }
 
-    @DeleteMapping("/deleteUser")
+    @PatchMapping("/deleteUser")
     @LogAnnotation(module="删除",operator="删除用户")
     public R deleteUser(@RequestBody User user) {
         int result = userService.deleteUser(user.getUsername());
@@ -82,4 +82,15 @@ public class UserController {
         }
         return R.failure(400, "更新失败，请检查你输入的信息是否正确");
     }
+
+    @PatchMapping("/deleteUserById/{id}")
+    @LogAnnotation(module="删除",operator="通过id删除用户")
+    public R deleteUserById(@PathVariable int id) {
+        int result = userService.deleteUserById(id);
+        if (result > 0) {
+            return R.success(200, "删除成功", result);
+        }
+        return R.failure(400, "删除失败，请检查您选中的用户是否已删除");
+    }
+
 }

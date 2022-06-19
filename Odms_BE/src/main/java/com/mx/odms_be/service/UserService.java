@@ -19,5 +19,8 @@ public interface UserService {
     User findUserByUsername(String username);
 //    根据id查找用户
     User findUserById(int id);
+
+//    根据id删除用户
+    int deleteUserById(int id);
 }
 

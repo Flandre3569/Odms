@@ -5,8 +5,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 @Mapper
 public interface ProfileMapper {
+    @Select({"select * from `profile`"})
+    List<Profile> findAllProfile();
     @Select("select * from `profile` where user_id = #{user_id}")
     Profile findProfile(int user_id);
 

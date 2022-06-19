@@ -5,6 +5,7 @@ import com.mx.odms_be.mapper.ProfileMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
@@ -18,5 +19,10 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public int updateProfile(Profile profile) {
         return profileMapper.updateProfile(profile);
+    }
+
+    @Override
+    public List<Profile> findAllProfile() {
+        return profileMapper.findAllProfile();
     }
 }

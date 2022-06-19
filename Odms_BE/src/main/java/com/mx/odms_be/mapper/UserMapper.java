@@ -15,8 +15,10 @@ public interface UserMapper {
     int addUser(User user);
     @Select({"select * from `users` where username = #{username}"})
     User findUserByUsername(String username);
-    @Delete({"delete from `users` where username = #{username}"})
+    @Update({"update `users` set userStatus = 1 where username = #{username}"})
     int deleteUser(String username);
+    @Update({"update `users` set userStatus = 1 where id = #{id}"})
+    int deleteUserById(int id);
     @Update({"<script>",
             "update users",
             "<set>",

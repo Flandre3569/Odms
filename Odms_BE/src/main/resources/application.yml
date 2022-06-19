@@ -7,4 +7,9 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+  servlet:
+    multipart:
+      max-file-size: 10485760 # 单个文件限制在10M之内
+      max-request-size: 104857600 # 单个请求域限制在100M之内
+server:
+  port: 9999

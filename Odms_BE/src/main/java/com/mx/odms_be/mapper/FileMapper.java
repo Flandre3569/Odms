@@ -1,6 +1,7 @@
 package com.mx.odms_be.mapper;
 
 import com.mx.odms_be.entity.File;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -17,4 +18,13 @@ public interface FileMapper {
 
     @Select({"select * from `file`"})
     List<File> findAllFile();
+
+    @Delete({"delete from `file` where id = #{id}"})
+    int deleteFile(int id);
+
+    @Select({"select * from `file` where id = #{id}"})
+    File findFileById(int id);
+
+    @Select({"select count(*) from `file` where user_id = #{user_id}"})
+    int fileCount(int user_id);
 }
